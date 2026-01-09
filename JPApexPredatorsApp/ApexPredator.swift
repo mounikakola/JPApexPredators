@@ -26,21 +26,41 @@ struct ApexPredator : Decodable, Identifiable /*to decode some json data to swif
         let movie: String
         let sceneDescription: String
     }
+}
+
+enum ApexType: String, Decodable, CaseIterable, Identifiable{
+    case all
+    case land // "land"
+    case air
+    case sea
     
-    enum ApexType: String, Decodable{
-        case land // "land"
-        case air
-        case sea
-        
-        var backgroundColor: Color {
-            switch self {
-            case .land:
-                return .brown
-            case .air:
-                return .teal
-            case .sea:
-                return .blue
-            }
+    var id: ApexType{
+        self
+    }
+    
+    var backgroundColor: Color {
+        switch self {
+        case .land:
+            return .brown
+        case .air:
+            return .teal
+        case .sea:
+            return .blue
+        case .all:
+            return .black
+        }
+    }
+    
+    var icon: String{
+        switch self {
+        case .all:
+            "square.stack.3d.up.fill"
+        case .air:
+            "wind"
+        case .sea:
+            "drop.fill"
+        case .land:
+            "leaf.fill"
         }
     }
 }
