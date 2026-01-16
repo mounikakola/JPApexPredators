@@ -63,4 +63,16 @@ class Predators {
             }
         }
     }
+    
+    func delete(at offsets: IndexSet) {
+        for index in offsets {
+            let predator = apexPredators[index]
+            
+            apexPredators.remove(at: index)
+            
+            allApexPredators.removeAll {
+                $0.id == predator.id
+            }
+        }
+    }
 }

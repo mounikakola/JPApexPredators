@@ -13,21 +13,42 @@ struct PredatorMap: View {
     
     @State var position: MapCameraPosition
     @State var satelliteView: Bool = false
+    @State private var selectedID: ApexPredator.ID?
     
     var body: some View {
         Map(position: $position){
             ForEach(predators) { predator in
                 Annotation(predator.name, coordinate: predator.location)
                 {
-                    Image(predator.image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(height: 100)
-                        .shadow(color: .white, radius: 3)
-                        .scaleEffect(x: -1)
+                    VStack{
+                        
+                        // callout view
+                        if selectedID == predator.id {
+                            CalloutView(predator: predator)
+                                .offset(y: 6)
+                                .transition(.opacity)
+                        }
+                        
+                        Image(predator.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(height: 100)
+                            .shadow(color: .white, radius: 3)
+                            .scaleEffect(x: -1)
+                            .onTapGesture {
+                                withAnimation(.easeInOut){
+                                    selectedID = predator.id
+                                }
+                            }
+                    }
                 }
             }
         }
+        .simultaneousGesture(
+            TapGesture().onEnded {
+                selectedID = nil
+            }
+        )
         .mapStyle(satelliteView ? .imagery(elevation: .realistic) : .standard(elevation: .realistic))
         .overlay(alignment: .bottomTrailing){
             Button{

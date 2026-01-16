@@ -35,7 +35,7 @@ struct ApexPredator : Decodable, Identifiable /*to decode some json data to swif
 
 enum ApexType: String, Decodable, CaseIterable, Identifiable{
     case all
-    case land // "land"
+    case land
     case air
     case sea
     

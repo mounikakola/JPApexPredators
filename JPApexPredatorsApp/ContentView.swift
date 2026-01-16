@@ -26,39 +26,44 @@ struct ContentView: View {
     
     var body: some View {
         NavigationStack{
-            List(filteredDinos){ predator in
-                NavigationLink{
-                    PredatorDetail(predator: predator, position: .camera(
-                        MapCamera(
-                            centerCoordinate: predator.location,
-                            distance: 30000
-                        )))
-                }label:{
-                    HStack{
-                        //Image
-                        
-                        Image(predator.image)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 100, height: 100)
-                            .shadow(color: .white, radius: 1)
-                        
-                        VStack(alignment: .leading){
-                            //Name
-                            Text(predator.name)
-                                .fontWeight(.bold)
+            List{
+                ForEach(filteredDinos){ predator in
+                    NavigationLink{
+                        PredatorDetail(predator: predator, position: .camera(
+                            MapCamera(
+                                centerCoordinate: predator.location,
+                                distance: 30000
+                            )))
+                    }label:{
+                        HStack{
+                            //Image
                             
-                            //Type
-                            Text(predator.type.rawValue.capitalized)
-                                .font(.subheadline)
-                                .fontWeight(.semibold)
-                                .padding(.horizontal, 13)
-                                .padding(.vertical, 5)
-                                .background(predator.type.backgroundColor)
-                                .clipShape(.capsule)
+                            Image(predator.image)
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 100, height: 100)
+                                .shadow(color: .white, radius: 1)
                             
+                            VStack(alignment: .leading){
+                                //Name
+                                Text(predator.name)
+                                    .fontWeight(.bold)
+                                
+                                //Type
+                                Text(predator.type.rawValue.capitalized)
+                                    .font(.subheadline)
+                                    .fontWeight(.semibold)
+                                    .padding(.horizontal, 13)
+                                    .padding(.vertical, 5)
+                                    .background(predator.type.backgroundColor)
+                                    .clipShape(.capsule)
+                                
+                            }
                         }
                     }
+                }
+                .onDelete { indexSet in
+                    predator.delete(at: indexSet)
                 }
             }
             .navigationTitle("Apex Predator")

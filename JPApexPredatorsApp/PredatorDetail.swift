@@ -32,13 +32,19 @@ struct PredatorDetail: View {
                         }
                     
                     //Dino image
-                    Image(predator.image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: geo.size.width/1.5 , height: geo.size.height/3.7)
-                        .scaleEffect(x: -1, ) //flip the image top to bottom, horizontal and vertical and strecthing the image
-                        .shadow(color: .black, radius: 7)
-                        .offset(y: 20) // just like scaleeffect, offset does padding
+                    NavigationLink{
+                        Image(predator.image)
+                            .resizable()
+                            .scaledToFit()
+                    } label:{
+                        Image(predator.image)
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geo.size.width/1.5 , height: geo.size.height/3.7)
+                            .scaleEffect(x: -1, ) //flip the image top to bottom, horizontal and vertical and strecthing the image
+                            .shadow(color: .black, radius: 7)
+                            .offset(y: 20) // just like scaleeffect, offset does padding
+                    }
                 }
                 
                 VStack(alignment: .leading){
